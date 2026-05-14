@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NexaData — Data Science Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0a0a0f;
+    --ink-soft: #3d3d4a;
+    --ink-muted: #7a7a8c;
+    --surface: #ffffff;
+    --surface-2: #f4f4f8;
+    --accent: #00e5b4;
+    --accent-dark: #00b890;
+    --accent-glow: rgba(0,229,180,0.15);
+    --navy: #050b1f;
+    --navy-mid: #0d1a3a;
+    --border: rgba(255,255,255,0.08);
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: #e8e8f0;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 6%;
+    background: rgba(5,11,31,0.8);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(232,232,240,0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-cta {
+    background: var(--accent);
+    color: var(--navy) !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent-dark) !important; color: var(--navy) !important; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 6% 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,180,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,180,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+  }
+  .hero-glow {
+    position: absolute; top: 10%; right: -5%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,229,180,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; max-width: 780px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,229,180,0.1);
+    border: 1px solid rgba(0,229,180,0.25);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+  }
+  .hero-badge::before { content: '●'; font-size: 0.5rem; }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+  h1 .accent { color: var(--accent); display: block; }
+  .hero-sub {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: rgba(232,232,240,0.65);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: #e8e8f0;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.95rem;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    border: 1px solid rgba(232,232,240,0.2);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: rgba(232,232,240,0.5); background: rgba(232,232,240,0.05); }
+
+  /* ── STATS ── */
+  .stats-bar {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 6%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 2rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label { font-size: 0.85rem; color: rgba(232,232,240,0.5); font-weight: 300; }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 6rem 6%; }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    letter-spacing: -0.025em;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+  .section-sub {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(232,232,240,0.55);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 3.5rem;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--navy-mid); }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .about-text p {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(232,232,240,0.65);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  .about-text p strong { color: #e8e8f0; font-weight: 500; }
+  .about-cards { display: flex; flex-direction: column; gap: 1rem; }
+  .about-card {
+    background: rgba(0,229,180,0.05);
+    border: 1px solid rgba(0,229,180,0.15);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .about-card-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .about-card h4 { font-size: 0.95rem; font-weight: 500; color: #fff; margin-bottom: 0.25rem; }
+  .about-card p { font-size: 0.85rem; color: rgba(232,232,240,0.5); margin: 0; line-height: 1.5; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--navy); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .service-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    transition: border-color 0.25s, transform 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { border-color: rgba(0,229,180,0.3); transform: translateY(-3px); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon {
+    width: 48px; height: 48px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(0,229,180,0.2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+  .service-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .service-card p { font-size: 0.875rem; color: rgba(232,232,240,0.5); line-height: 1.65; margin-bottom: 1.25rem; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: rgba(232,232,240,0.06);
+    color: rgba(232,232,240,0.45);
+    border: 1px solid rgba(232,232,240,0.1);
+  }
+
+  /* ── HOW WE WORK ── */
+  #process { background: var(--navy-mid); }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+    counter-reset: step;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), rgba(0,229,180,0.1));
+  }
+  .process-step {
+    padding: 0 1.5rem;
+    text-align: center;
+    position: relative;
+  }
+  .step-number {
+    width: 56px; height: 56px;
+    background: var(--navy);
+    border: 1px solid rgba(0,229,180,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin: 0 auto 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .process-step h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .process-step p { font-size: 0.82rem; color: rgba(232,232,240,0.45); line-height: 1.6; }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--navy); }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+  .testimonial-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+  }
+  .quote-mark {
+    font-family: 'Syne', sans-serif;
+    font-size: 3rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+  .testimonial-card blockquote {
+    font-size: 0.95rem;
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(232,232,240,0.7);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+  .author-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #007aff);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+  .author-name { font-size: 0.875rem; font-weight: 500; color: #fff; }
+  .author-title { font-size: 0.78rem; color: rgba(232,232,240,0.4); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--navy-mid); }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .contact-info h2 { margin-bottom: 1rem; }
+  .contact-info p {
+    font-size: 0.95rem;
+    color: rgba(232,232,240,0.55);
+    font-weight: 300;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+  .contact-detail {
+    display: flex; align-items: center; gap: 0.75rem;
+    font-size: 0.875rem;
+    color: rgba(232,232,240,0.5);
+    margin-bottom: 0.75rem;
+  }
+  .contact-detail span:first-child { color: var(--accent); font-size: 1rem; }
+
+  form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(232,232,240,0.45);
+    margin-bottom: 0.4rem;
+  }
+  input, select, textarea {
+    width: 100%;
+    background: rgba(232,232,240,0.04);
+    border: 1px solid rgba(232,232,240,0.12);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: #e8e8f0;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+  input::placeholder, textarea::placeholder { color: rgba(232,232,240,0.25); }
+  input:focus, select:focus, textarea:focus {
+    border-color: rgba(0,229,180,0.5);
+    background: rgba(0,229,180,0.03);
+  }
+  select option { background: var(--navy); color: #e8e8f0; }
+  textarea { resize: vertical; min-height: 120px; }
+  .form-submit {
+    margin-top: 0.5rem;
+    background: var(--accent);
+    color: var(--navy);
+    border: none;
+    border-radius: 8px;
+    padding: 1rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: var(--accent-dark); transform: translateY(-1px); }
+  .form-note {
+    font-size: 0.78rem;
+    color: rgba(232,232,240,0.3);
+    margin-top: 0.25rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #fff;
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a {
+    font-size: 0.82rem;
+    color: rgba(232,232,240,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: rgba(232,232,240,0.8); }
+  .footer-copy { font-size: 0.78rem; color: rgba(232,232,240,0.25); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * {
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-content > *:nth-child(3) { animation-delay: 0.35s; }
+  .hero-content > *:nth-child(4) { animation-delay: 0.5s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .process-steps::before { display: none; }
+    nav { padding: 1rem 5%; }
+    .nav-links { display: none; }
+    footer { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Nexa<span>Data</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#testimonials">Clients</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Data Science &amp; AI Consulting</div>
+    <h1>Turning Raw Data<span class="accent">Into Real Decisions.</span></h1>
+    <p class="hero-sub">We help ambitious companies build data strategies, machine learning systems, and analytics infrastructure that actually move the needle.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Start a Project</a>
+      <a href="#services" class="btn-ghost">Explore Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div>
+    <div class="stat-num">50+</div>
+    <div class="stat-label">Projects delivered</div>
+  </div>
+  <div>
+    <div class="stat-num">10+</div>
+    <div class="stat-label">Years of expertise</div>
+  </div>
+  <div>
+    <div class="stat-num">98%</div>
+    <div class="stat-label">Client satisfaction</div>
+  </div>
+  <div>
+    <div class="stat-num">3×</div>
+    <div class="stat-label">Average ROI delivered</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <p class="section-label">About Us</p>
+      <h2>We Make Data Work For You</h2>
+      <p>NexaData is a boutique data science consultancy that partners with companies to unlock the value hidden in their data. We're not a big agency — we're a tight team of <strong>senior data scientists, ML engineers, and strategists</strong> who care deeply about outcomes.</p>
+      <p>Whether you're starting from scratch or scaling an existing data function, we bring the expertise and hands-on execution to get you there faster.</p>
+    </div>
+    <div class="about-cards">
+      <div class="about-card">
+        <div class="about-card-icon">🎯</div>
+        <div>
+          <h4>Outcome-first mindset</h4>
+          <p>We define success in business terms first, then build the data systems to achieve it.</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">⚡</div>
+        <div>
+          <h4>Fast time to value</h4>
+          <p>Our structured sprints mean you see real results within weeks, not months.</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🔒</div>
+        <div>
+          <h4>Enterprise-grade trust</h4>
+          <p>We operate under strict data security and privacy standards on every engagement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label">What We Do</p>
+  <h2>Our Services</h2>
+  <p class="section-sub">From strategy to production deployment — we cover the full data science lifecycle.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🗺️</div>
+      <h3>Data Strategy &amp; Roadmapping</h3>
+      <p>We assess your current data maturity and build a clear, prioritized roadmap to unlock competitive advantage through data.</p>
+      <div class="service-tags">
+        <span class="tag">Data Audit</span>
+        <span class="tag">Roadmapping</span>
+        <span class="tag">KPI Design</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🤖</div>
+      <h3>Machine Learning &amp; AI Modeling</h3>
+      <p>Custom ML models built for your specific domain — from predictive analytics to NLP, recommendation systems, and beyond.</p>
+      <div class="service-tags">
+        <span class="tag">Predictive Models</span>
+        <span class="tag">NLP</span>
+        <span class="tag">Deep Learning</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔧</div>
+      <h3>Data Engineering &amp; Pipelines</h3>
+      <p>Robust, scalable data infrastructure — ETL pipelines, data lakes, warehouses, and real-time streaming architectures.</p>
+      <div class="service-tags">
+        <span class="tag">ETL/ELT</span>
+        <span class="tag">dbt</span>
+        <span class="tag">Spark</span>
+        <span class="tag">Airflow</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3>BI &amp; Dashboard Development</h3>
+      <p>Intuitive, self-serve dashboards that put the right metrics in front of the right people — built for decision-making.</p>
+      <div class="service-tags">
+        <span class="tag">Tableau</span>
+        <span class="tag">Looker</span>
+        <span class="tag">Power BI</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧹</div>
+      <h3>Data Quality &amp; Governance</h3>
+      <p>Comprehensive data audits, quality frameworks, and governance policies so your teams can trust the numbers they work with.</p>
+      <div class="service-tags">
+        <span class="tag">Data Quality</span>
+        <span class="tag">Governance</span>
+        <span class="tag">Cataloging</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">☁️</div>
+      <h3>Cloud Data Platform Setup</h3>
+      <p>Architecture and deployment of modern cloud data stacks on AWS, GCP, or Azure — optimized for cost and performance.</p>
+      <div class="service-tags">
+        <span class="tag">AWS</span>
+        <span class="tag">GCP</span>
+        <span class="tag">Azure</span>
+        <span class="tag">Snowflake</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <p class="section-label">How We Work</p>
+  <h2>Our Engagement Process</h2>
+  <p class="section-sub">A proven four-step approach that delivers results without surprises.</p>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-number">01</div>
+      <h4>Discover</h4>
+      <p>We audit your data landscape, understand your goals, and identify the highest-value opportunities.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-number">02</div>
+      <h4>Analyze</h4>
+      <p>Deep exploration of your data to uncover patterns, gaps, and insights that shape the solution design.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-number">03</div>
+      <h4>Build</h4>
+      <p>Iterative development in two-week sprints, with continuous feedback loops to keep outcomes aligned.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-number">04</div>
+      <h4>Deliver</h4>
+      <p>Production deployment, knowledge transfer, and ongoing support to ensure lasting impact.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <p class="section-label">Client Stories</p>
+  <h2>What Our Clients Say</h2>
+  <p class="section-sub">We let results and relationships speak for themselves.</p>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <blockquote>NexaData transformed the way we use data. Within three months we had a forecasting model that cut our inventory costs by 22%. The team was exceptional — technical, fast, and genuinely invested in our success.</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">SR</div>
+        <div>
+          <div class="author-name">Sarah Reynolds</div>
+          <div class="author-title">VP of Operations, RetailCo</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <blockquote>We hired NexaData to build our data platform from scratch. What impressed me most was how they translated complex technical concepts into clear business value. Our exec team finally trusts the data.</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">MK</div>
+        <div>
+          <div class="author-name">Marcus Kim</div>
+          <div class="author-title">CTO, FinTech Startup</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <blockquote>Their data quality audit was eye-opening. We didn't realize how much revenue we were leaving on the table due to poor data hygiene. The governance framework they implemented has been a game-changer.</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">AL</div>
+        <div>
+          <div class="author-name">Aisha Lawson</div>
+          <div class="author-title">Head of Analytics, HealthCorp</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <p class="section-label">Get In Touch</p>
+      <h2>Let's Talk About Your Data</h2>
+      <p>Tell us about your project and we'll get back to you within one business day. No sales pitch — just a straightforward conversation about whether we're the right fit.</p>
+      <div class="contact-detail"><span>✉</span><span>hello@nexadata.io</span></div>
+      <div class="contact-detail"><span>📍</span><span>San Francisco, CA · Remote-first</span></div>
+      <div class="contact-detail"><span>⏱</span><span>Response within 1 business day</span></div>
+    </div>
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div>
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Jane Smith" required />
+        </div>
+        <div>
+          <label for="email">Work Email</label>
+          <input type="email" id="email" placeholder="jane@company.com" required />
+        </div>
+      </div>
+      <div>
+        <label for="company">Company</label>
+        <input type="text" id="company" placeholder="Acme Inc." />
+      </div>
+      <div>
+        <label for="service">Project Type</label>
+        <select id="service">
+          <option value="">Select a service…</option>
+          <option>Data Strategy &amp; Roadmapping</option>
+          <option>Machine Learning &amp; AI Modeling</option>
+          <option>Data Engineering &amp; Pipelines</option>
+          <option>BI &amp; Dashboard Development</option>
+          <option>Data Quality &amp; Governance</option>
+          <option>Cloud Data Platform Setup</option>
+          <option>Other / Not sure yet</option>
+        </select>
+      </div>
+      <div>
+        <label for="message">Tell Us About Your Project</label>
+        <textarea id="message" placeholder="What are you trying to achieve? Any context on timeline, team size, or current stack is helpful…" required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Message →</button>
+      <p class="form-note">We typically reply within 1 business day. Your information is never shared.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Nexa<span>Data</span></a>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#">LinkedIn</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 NexaData. All rights reserved.</p>
+</footer>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#00b890';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+      btn.disabled = false;
+      e.target.reset();
+    }, 3000);
+  }
+
+  // Smooth reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .testimonial-card, .process-step, .about-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
