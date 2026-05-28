@@ -11,17 +11,19 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --ink: #0a0a0f;
-    --ink-soft: #3d3d4a;
-    --ink-muted: #7a7a8c;
+    --ink: #2B2B2B;
+    --ink-soft: #444;
+    --ink-muted: #777;
     --surface: #ffffff;
-    --surface-2: #f4f4f8;
-    --accent: #00e5b4;
-    --accent-dark: #00b890;
-    --accent-glow: rgba(0,229,180,0.15);
-    --navy: #050b1f;
-    --navy-mid: #0d1a3a;
-    --border: rgba(255,255,255,0.08);
+    --surface-2: #F7F9FB;
+    --accent: #C8A96B;
+    --accent-dark: #a8894b;
+    --accent-glow: rgba(200,169,107,0.15);
+    --navy: #F7F9FB;
+    --navy-mid: #eef1f5;
+    --border: rgba(11,31,51,0.1);
+    --primary: #0B1F33;
+    --secondary: #385170;
     --radius: 12px;
     --radius-lg: 20px;
   }
@@ -30,7 +32,7 @@
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--navy);
+    background: var(--bg);
     color: #e8e8f0;
     line-height: 1.6;
     overflow-x: hidden;
@@ -41,9 +43,9 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1.25rem 6%;
-    background: rgba(5,11,31,0.8);
+    background: rgba(11,31,51,0.95);
     backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(11,31,51,0.15);
   }
   .nav-logo {
     font-family: 'Syne', sans-serif;
@@ -56,7 +58,7 @@
   .nav-logo span { color: var(--accent); }
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a {
-    color: rgba(232,232,240,0.7);
+    color: rgba(255,255,255,0.75);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 400;
@@ -80,26 +82,27 @@
     padding: 8rem 6% 5rem;
     position: relative;
     overflow: hidden;
+    background: var(--primary);
   }
   .hero-grid-bg {
     position: absolute; inset: 0;
     background-image:
-      linear-gradient(rgba(0,229,180,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,180,0.04) 1px, transparent 1px);
+      linear-gradient(rgba(200,169,107,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,169,107,0.06) 1px, transparent 1px);
     background-size: 60px 60px;
     mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
   }
   .hero-glow {
     position: absolute; top: 10%; right: -5%;
     width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(0,229,180,0.12) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(200,169,107,0.15) 0%, transparent 65%);
     pointer-events: none;
   }
   .hero-content { position: relative; max-width: 780px; }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(0,229,180,0.1);
-    border: 1px solid rgba(0,229,180,0.25);
+    background: rgba(200,169,107,0.15);
+    border: 1px solid rgba(200,169,107,0.35);
     color: var(--accent);
     font-size: 0.8rem;
     font-weight: 500;
@@ -123,7 +126,7 @@
   .hero-sub {
     font-size: 1.15rem;
     font-weight: 300;
-    color: rgba(232,232,240,0.65);
+    color: rgba(255,255,255,0.65);
     max-width: 520px;
     margin-bottom: 2.5rem;
     line-height: 1.7;
@@ -131,7 +134,7 @@
   .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
   .btn-primary {
     background: var(--accent);
-    color: var(--navy);
+    color: #fff;
     font-family: 'DM Sans', sans-serif;
     font-weight: 500;
     font-size: 0.95rem;
@@ -162,9 +165,9 @@
 
   /* ── STATS ── */
   .stats-bar {
-    background: var(--navy-mid);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    background: var(--secondary);
+    border-top: 1px solid rgba(11,31,51,0.15);
+    border-bottom: 1px solid rgba(11,31,51,0.15);
     padding: 2.5rem 6%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -179,7 +182,7 @@
     line-height: 1;
     margin-bottom: 0.4rem;
   }
-  .stat-label { font-size: 0.85rem; color: rgba(232,232,240,0.5); font-weight: 300; }
+  .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.6); font-weight: 300; }
 
   /* ── SECTION SHARED ── */
   section { padding: 6rem 6%; }
@@ -196,21 +199,21 @@
     font-weight: 800;
     font-size: clamp(2rem, 4vw, 3.2rem);
     letter-spacing: -0.025em;
-    color: #fff;
+    color: var(--primary);
     line-height: 1.1;
     margin-bottom: 1.25rem;
   }
   .section-sub {
     font-size: 1rem;
     font-weight: 300;
-    color: rgba(232,232,240,0.55);
+    color: rgba(43,43,43,0.55);
     max-width: 480px;
     line-height: 1.7;
     margin-bottom: 3.5rem;
   }
 
   /* ── ABOUT ── */
-  #about { background: var(--navy-mid); }
+  #about { background: #eef1f5; }
   .about-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -220,15 +223,15 @@
   .about-text p {
     font-size: 1rem;
     font-weight: 300;
-    color: rgba(232,232,240,0.65);
+    color: rgba(43,43,43,0.65);
     line-height: 1.8;
     margin-bottom: 1rem;
   }
-  .about-text p strong { color: #e8e8f0; font-weight: 500; }
+  .about-text p strong { color: var(--primary); font-weight: 500; }
   .about-cards { display: flex; flex-direction: column; gap: 1rem; }
   .about-card {
-    background: rgba(0,229,180,0.05);
-    border: 1px solid rgba(0,229,180,0.15);
+    background: rgba(200,169,107,0.06);
+    border: 1px solid rgba(200,169,107,0.2);
     border-radius: var(--radius);
     padding: 1.25rem 1.5rem;
     display: flex; gap: 1rem; align-items: flex-start;
@@ -238,19 +241,19 @@
     flex-shrink: 0;
     margin-top: 2px;
   }
-  .about-card h4 { font-size: 0.95rem; font-weight: 500; color: #fff; margin-bottom: 0.25rem; }
-  .about-card p { font-size: 0.85rem; color: rgba(232,232,240,0.5); margin: 0; line-height: 1.5; }
+  .about-card h4 { font-size: 0.95rem; font-weight: 500; color: var(--primary); margin-bottom: 0.25rem; }
+  .about-card p { font-size: 0.85rem; color: rgba(43,43,43,0.55); margin: 0; line-height: 1.5; }
 
   /* ── SERVICES ── */
-  #services { background: var(--navy); }
+  #services { background: var(--surface-2); }
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
   }
   .service-card {
-    background: var(--navy-mid);
-    border: 1px solid var(--border);
+    background: #ffffff;
+    border: 1px solid rgba(11,31,51,0.1);
     border-radius: var(--radius-lg);
     padding: 2rem;
     transition: border-color 0.25s, transform 0.25s;
@@ -266,12 +269,12 @@
     transform-origin: left;
     transition: transform 0.3s;
   }
-  .service-card:hover { border-color: rgba(0,229,180,0.3); transform: translateY(-3px); }
+  .service-card:hover { border-color: rgba(200,169,107,0.4); transform: translateY(-3px); }
   .service-card:hover::before { transform: scaleX(1); }
   .service-icon {
     width: 48px; height: 48px;
-    background: var(--accent-glow);
-    border: 1px solid rgba(0,229,180,0.2);
+    background: rgba(200,169,107,0.12);
+    border: 1px solid rgba(200,169,107,0.25);
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.3rem;
@@ -281,24 +284,24 @@
     font-family: 'Syne', sans-serif;
     font-size: 1.05rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--primary);
     margin-bottom: 0.75rem;
     letter-spacing: -0.01em;
   }
-  .service-card p { font-size: 0.875rem; color: rgba(232,232,240,0.5); line-height: 1.65; margin-bottom: 1.25rem; }
+  .service-card p { font-size: 0.875rem; color: rgba(43,43,43,0.55); line-height: 1.65; margin-bottom: 1.25rem; }
   .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .tag {
     font-size: 0.7rem;
     font-weight: 500;
     padding: 3px 10px;
     border-radius: 100px;
-    background: rgba(232,232,240,0.06);
-    color: rgba(232,232,240,0.45);
-    border: 1px solid rgba(232,232,240,0.1);
+    background: rgba(56,81,112,0.06);
+    color: rgba(56,81,112,0.7);
+    border: 1px solid rgba(56,81,112,0.15);
   }
 
   /* ── HOW WE WORK ── */
-  #process { background: var(--navy-mid); }
+  #process { background: var(--primary); }
   .process-steps {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -313,7 +316,7 @@
     left: 12%;
     right: 12%;
     height: 1px;
-    background: linear-gradient(90deg, var(--accent), rgba(0,229,180,0.1));
+    background: linear-gradient(90deg, var(--accent), rgba(200,169,107,0.1));
   }
   .process-step {
     padding: 0 1.5rem;
@@ -322,7 +325,7 @@
   }
   .step-number {
     width: 56px; height: 56px;
-    background: var(--navy);
+    background: var(--bg);
     border: 1px solid rgba(0,229,180,0.4);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
@@ -338,21 +341,21 @@
     font-family: 'Syne', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #fff;
+    color: #ffffff;
     margin-bottom: 0.5rem;
   }
-  .process-step p { font-size: 0.82rem; color: rgba(232,232,240,0.45); line-height: 1.6; }
+  .process-step p { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
 
   /* ── TESTIMONIALS ── */
-  #testimonials { background: var(--navy); }
+  #testimonials { background: var(--surface-2); }
   .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.25rem;
   }
   .testimonial-card {
-    background: var(--navy-mid);
-    border: 1px solid var(--border);
+    background: #ffffff;
+    border: 1px solid rgba(11,31,51,0.1);
     border-radius: var(--radius-lg);
     padding: 2rem;
   }
@@ -368,7 +371,7 @@
     font-size: 0.95rem;
     font-style: italic;
     font-weight: 300;
-    color: rgba(232,232,240,0.7);
+    color: var(--primary);
     line-height: 1.7;
     margin-bottom: 1.5rem;
   }
@@ -376,18 +379,18 @@
   .author-avatar {
     width: 40px; height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), #007aff);
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
     display: flex; align-items: center; justify-content: center;
     font-size: 0.8rem;
     font-weight: 500;
-    color: var(--navy);
+    color: #fff;
     flex-shrink: 0;
   }
-  .author-name { font-size: 0.875rem; font-weight: 500; color: #fff; }
-  .author-title { font-size: 0.78rem; color: rgba(232,232,240,0.4); }
+  .author-name { font-size: 0.875rem; font-weight: 500; color: var(--primary); }
+  .author-title { font-size: 0.78rem; color: rgba(43,43,43,0.45); }
 
   /* ── CONTACT ── */
-  #contact { background: var(--navy-mid); }
+  #contact { background: #eef1f5; }
   .contact-inner {
     display: grid;
     grid-template-columns: 1fr 1.4fr;
@@ -397,7 +400,7 @@
   .contact-info h2 { margin-bottom: 1rem; }
   .contact-info p {
     font-size: 0.95rem;
-    color: rgba(232,232,240,0.55);
+    color: rgba(43,43,43,0.6);
     font-weight: 300;
     line-height: 1.75;
     margin-bottom: 2rem;
@@ -405,7 +408,7 @@
   .contact-detail {
     display: flex; align-items: center; gap: 0.75rem;
     font-size: 0.875rem;
-    color: rgba(232,232,240,0.5);
+    color: rgba(43,43,43,0.6);
     margin-bottom: 0.75rem;
   }
   .contact-detail span:first-child { color: var(--accent); font-size: 1rem; }
@@ -418,33 +421,33 @@
     font-weight: 500;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: rgba(232,232,240,0.45);
+    color: rgba(43,43,43,0.5);
     margin-bottom: 0.4rem;
   }
   input, select, textarea {
     width: 100%;
-    background: rgba(232,232,240,0.04);
-    border: 1px solid rgba(232,232,240,0.12);
+    background: #ffffff;
+    border: 1px solid rgba(11,31,51,0.15);
     border-radius: 8px;
     padding: 0.8rem 1rem;
     font-family: 'DM Sans', sans-serif;
     font-size: 0.9rem;
-    color: #e8e8f0;
+    color: var(--ink);
     outline: none;
     transition: border-color 0.2s, background 0.2s;
     -webkit-appearance: none;
   }
-  input::placeholder, textarea::placeholder { color: rgba(232,232,240,0.25); }
+  input::placeholder, textarea::placeholder { color: rgba(43,43,43,0.3); }
   input:focus, select:focus, textarea:focus {
-    border-color: rgba(0,229,180,0.5);
-    background: rgba(0,229,180,0.03);
+    border-color: rgba(200,169,107,0.6);
+    background: rgba(200,169,107,0.03);
   }
-  select option { background: var(--navy); color: #e8e8f0; }
+  select option { background: #ffffff; color: var(--ink); }
   textarea { resize: vertical; min-height: 120px; }
   .form-submit {
     margin-top: 0.5rem;
     background: var(--accent);
-    color: var(--navy);
+    color: #fff;
     border: none;
     border-radius: 8px;
     padding: 1rem 2rem;
@@ -458,14 +461,14 @@
   .form-submit:hover { background: var(--accent-dark); transform: translateY(-1px); }
   .form-note {
     font-size: 0.78rem;
-    color: rgba(232,232,240,0.3);
+    color: rgba(43,43,43,0.4);
     margin-top: 0.25rem;
   }
 
   /* ── FOOTER ── */
   footer {
-    background: var(--navy);
-    border-top: 1px solid var(--border);
+    background: rgba(11,31,51,0.95);
+    border-top: 1px solid rgba(255,255,255,0.1);
     padding: 2.5rem 6%;
     display: flex;
     align-items: center;
@@ -484,12 +487,12 @@
   .footer-links { display: flex; gap: 2rem; list-style: none; }
   .footer-links a {
     font-size: 0.82rem;
-    color: rgba(232,232,240,0.4);
+    color: rgba(255,255,255,0.45);
     text-decoration: none;
     transition: color 0.2s;
   }
-  .footer-links a:hover { color: rgba(232,232,240,0.8); }
-  .footer-copy { font-size: 0.78rem; color: rgba(232,232,240,0.25); }
+  .footer-links a:hover { color: rgba(255,255,255,0.85); }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
@@ -569,31 +572,32 @@
 <section id="about">
   <div class="about-inner">
     <div class="about-text">
-      <p class="section-label">About Us</p>
-      <h2>We Make Data Work For You</h2>
-      <p>NexaData is a boutique data science consultancy that partners with companies to unlock the value hidden in their data. We're not a big agency — we're a tight team of <strong>senior data scientists, ML engineers, and strategists</strong> who care deeply about outcomes.</p>
-      <p>Whether you're starting from scratch or scaling an existing data function, we bring the expertise and hands-on execution to get you there faster.</p>
+      <p class="section-label">Leadership &amp; Approach</p>
+      <h2>Led by Experience. Driven by Outcomes.</h2>
+      <p>Data Driven Consulting is led by founder <strong>Vivienne Thairu</strong>, an experienced analytics leader known for partnering with executives to turn data into actionable strategy.</p>
+      <p>With a background spanning industry, consulting, and academic institutions, she brings a unique ability to bridge technical insights with real-world business needs.</p>
+      <p>The firm's approach is collaborative and outcome-focused — delivering solutions that enhance planning, improve performance, and enable confident decision-making at the leadership level.</p>
     </div>
     <div class="about-cards">
       <div class="about-card">
+        <div class="about-card-icon">🤝</div>
+        <div>
+          <h4>Collaborative by design</h4>
+          <p>We work alongside your team, not just for them — embedding into your goals and challenges from day one.</p>
+        </div>
+      </div>
+      <div class="about-card">
         <div class="about-card-icon">🎯</div>
         <div>
-          <h4>Outcome-first mindset</h4>
-          <p>We define success in business terms first, then build the data systems to achieve it.</p>
+          <h4>Outcome-focused</h4>
+          <p>Every engagement is tied to real business outcomes — planning, performance, and leadership-level decisions.</p>
         </div>
       </div>
       <div class="about-card">
-        <div class="about-card-icon">⚡</div>
+        <div class="about-card-icon">🌉</div>
         <div>
-          <h4>Fast time to value</h4>
-          <p>Our structured sprints mean you see real results within weeks, not months.</p>
-        </div>
-      </div>
-      <div class="about-card">
-        <div class="about-card-icon">🔒</div>
-        <div>
-          <h4>Enterprise-grade trust</h4>
-          <p>We operate under strict data security and privacy standards on every engagement.</p>
+          <h4>Bridging insight &amp; strategy</h4>
+          <p>We translate complex data into clear, confident direction that executives can act on immediately.</p>
         </div>
       </div>
     </div>
@@ -607,65 +611,33 @@
   <p class="section-sub">From strategy to production deployment — we cover the full data science lifecycle.</p>
   <div class="services-grid">
     <div class="service-card">
-      <div class="service-icon">🗺️</div>
-      <h3>Data Strategy &amp; Roadmapping</h3>
-      <p>We assess your current data maturity and build a clear, prioritized roadmap to unlock competitive advantage through data.</p>
+      <div class="service-icon">📈</div>
+      <h3>Forecasting &amp; Planning</h3>
+      <p>Forecasting solutions designed to improve accuracy, align cross-functional planning, and support executive decision-making.</p>
       <div class="service-tags">
-        <span class="tag">Data Audit</span>
-        <span class="tag">Roadmapping</span>
-        <span class="tag">KPI Design</span>
+        <span class="tag">Demand Forecasting</span>
+        <span class="tag">Scenario Planning</span>
+        <span class="tag">Executive Reporting</span>
       </div>
     </div>
     <div class="service-card">
-      <div class="service-icon">🤖</div>
-      <h3>Machine Learning &amp; AI Modeling</h3>
-      <p>Custom ML models built for your specific domain — from predictive analytics to NLP, recommendation systems, and beyond.</p>
+      <div class="service-icon">💰</div>
+      <h3>Revenue Optimization</h3>
+      <p>Drive revenue growth by optimizing pricing, channel performance, and customer strategy with data-backed insights.</p>
       <div class="service-tags">
-        <span class="tag">Predictive Models</span>
-        <span class="tag">NLP</span>
-        <span class="tag">Deep Learning</span>
+        <span class="tag">Pricing Strategy</span>
+        <span class="tag">Channel Analytics</span>
+        <span class="tag">Customer Strategy</span>
       </div>
     </div>
     <div class="service-card">
-      <div class="service-icon">🔧</div>
-      <h3>Data Engineering &amp; Pipelines</h3>
-      <p>Robust, scalable data infrastructure — ETL pipelines, data lakes, warehouses, and real-time streaming architectures.</p>
+      <div class="service-icon">📋</div>
+      <h3>Reporting Support</h3>
+      <p>We simplify complex reporting requirements, improve data accuracy, and strengthen institutional planning across your organization.</p>
       <div class="service-tags">
-        <span class="tag">ETL/ELT</span>
-        <span class="tag">dbt</span>
-        <span class="tag">Spark</span>
-        <span class="tag">Airflow</span>
-      </div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📊</div>
-      <h3>BI &amp; Dashboard Development</h3>
-      <p>Intuitive, self-serve dashboards that put the right metrics in front of the right people — built for decision-making.</p>
-      <div class="service-tags">
-        <span class="tag">Tableau</span>
-        <span class="tag">Looker</span>
-        <span class="tag">Power BI</span>
-      </div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🧹</div>
-      <h3>Data Quality &amp; Governance</h3>
-      <p>Comprehensive data audits, quality frameworks, and governance policies so your teams can trust the numbers they work with.</p>
-      <div class="service-tags">
-        <span class="tag">Data Quality</span>
-        <span class="tag">Governance</span>
-        <span class="tag">Cataloging</span>
-      </div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">☁️</div>
-      <h3>Cloud Data Platform Setup</h3>
-      <p>Architecture and deployment of modern cloud data stacks on AWS, GCP, or Azure — optimized for cost and performance.</p>
-      <div class="service-tags">
-        <span class="tag">AWS</span>
-        <span class="tag">GCP</span>
-        <span class="tag">Azure</span>
-        <span class="tag">Snowflake</span>
+        <span class="tag">Data Accuracy</span>
+        <span class="tag">Institutional Planning</span>
+        <span class="tag">Reporting Design</span>
       </div>
     </div>
   </div>
@@ -674,8 +646,8 @@
 <!-- PROCESS -->
 <section id="process">
   <p class="section-label">How We Work</p>
-  <h2>Our Engagement Process</h2>
-  <p class="section-sub">A proven four-step approach that delivers results without surprises.</p>
+  <h2 style="color:#fff;">Our Engagement Process</h2>
+  <p class="section-sub" style="color:rgba(255,255,255,0.55);">A proven four-step approach that delivers results without surprises.</p>
   <div class="process-steps">
     <div class="process-step">
       <div class="step-number">01</div>
@@ -747,7 +719,7 @@
   <div class="contact-inner">
     <div class="contact-info">
       <p class="section-label">Get In Touch</p>
-      <h2>Let's Talk About Your Data</h2>
+      <h2>Let's Talk About Your Business</h2>
       <p>Tell us about your project and we'll get back to you within one business day. No sales pitch — just a straightforward conversation about whether we're the right fit.</p>
       <div class="contact-detail"><span>✉</span><span>hello@nexadata.io</span></div>
       <div class="contact-detail"><span>📍</span><span>San Francisco, CA · Remote-first</span></div>
@@ -772,12 +744,9 @@
         <label for="service">Project Type</label>
         <select id="service">
           <option value="">Select a service…</option>
-          <option>Data Strategy &amp; Roadmapping</option>
-          <option>Machine Learning &amp; AI Modeling</option>
-          <option>Data Engineering &amp; Pipelines</option>
-          <option>BI &amp; Dashboard Development</option>
-          <option>Data Quality &amp; Governance</option>
-          <option>Cloud Data Platform Setup</option>
+          <option>Forecasting &amp; Planning</option>
+          <option>Revenue Optimization</option>
+          <option>Reporting Support</option>
           <option>Other / Not sure yet</option>
         </select>
       </div>
