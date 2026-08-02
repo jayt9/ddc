@@ -2,8 +2,8 @@ const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const TO_EMAIL = 'info@datadc.com';
-const FROM_EMAIL = 'Data Driven Consulting <onboarding@resend.dev>';
+const TO_EMAIL = 'info@data-dc.com';
+const FROM_EMAIL = 'Data Driven Consulting <hello@data-dc.com>';
 
 // Basic in-memory rate limiting (per serverless instance). Good enough to
 // blunt casual abuse; for stronger guarantees use Vercel Edge Config/KV.
