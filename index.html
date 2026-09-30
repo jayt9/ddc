@@ -520,6 +520,7 @@
   }
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -695,6 +696,7 @@
         <label for="message">What Challenge Are You Trying to Solve?</label>
         <textarea id="message" placeholder="Tell us about your goals, current challenges, or upcoming strategic priorities. We'll use this information to prepare for our conversation." required></textarea>
       </div>
+      <div class="cf-turnstile" data-sitekey="0x00000000000000000000AA" data-callback="onTurnstileSuccess"></div>
       <button type="submit" class="form-submit">Send Message →</button>
       <p class="form-note" id="form-status">We typically reply within 1 business day. Your information is never shared.</p>
     </form>
@@ -718,10 +720,21 @@
   const formStatus = document.getElementById('form-status');
   const formStatusDefault = formStatus.textContent;
 
+  let turnstileToken = '';
+  function onTurnstileSuccess(token) {
+    turnstileToken = token;
+  }
+
   contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('.form-submit');
     const originalBtnText = btn.textContent;
+
+    if (!turnstileToken) {
+      formStatus.textContent = 'Please complete the verification check above.';
+      formStatus.style.color = '#c0392b';
+      return;
+    }
 
     btn.disabled = true;
     btn.textContent = 'Sending…';
@@ -734,6 +747,7 @@
       company: document.getElementById('company').value,
       service: document.getElementById('service').value,
       message: document.getElementById('message').value,
+      turnstileToken,
     };
 
     try {
@@ -751,14 +765,18 @@
       btn.textContent = 'Message Sent ✓';
       btn.style.background = '#00b890';
       e.target.reset();
+      if (window.turnstile) window.turnstile.reset();
+      turnstileToken = '';
       setTimeout(() => {
         btn.textContent = originalBtnText;
         btn.style.background = '';
         btn.disabled = false;
       }, 3000);
     } catch (err) {
-      btn.textContent = originalBtnText;
       btn.disabled = false;
+      btn.textContent = originalBtnText;
+      if (window.turnstile) window.turnstile.reset();
+      turnstileToken = '';
       formStatus.textContent = err.message || 'Something went wrong. Please try again.';
       formStatus.style.color = '#c0392b';
     }

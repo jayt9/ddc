@@ -29,6 +29,22 @@ function sanitize(str, maxLen) {
   return String(str || '').trim().slice(0, maxLen).replace(/[\r\n]+/g, ' ');
 }
 
+async function verifyTurnstile(token, ip) {
+  if (!token) return false;
+
+  const params = new URLSearchParams();
+  params.append('secret', process.env.TURNSTILE_SECRET_KEY);
+  params.append('response', token);
+  if (ip) params.append('remoteip', ip);
+
+  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    body: params,
+  });
+  const data = await res.json();
+  return data.success === true;
+}
+
 module.exports = async function handler(req, res) {
   // Same-origin form submissions don't need CORS at all; this just guards
   // against the endpoint being called cross-site from another domain.
@@ -53,7 +69,7 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const { name, email, company, service, message } = req.body || {};
+  const { name, email, company, service, message, turnstileToken } = req.body || {};
 
   const cleanName = sanitize(name, 100);
   const cleanEmail = sanitize(email, 200);
@@ -68,6 +84,12 @@ module.exports = async function handler(req, res) {
 
   if (!EMAIL_RE.test(cleanEmail)) {
     res.status(400).json({ error: 'Please provide a valid email address.' });
+    return;
+  }
+
+  const isHuman = await verifyTurnstile(turnstileToken, ip);
+  if (!isHuman) {
+    res.status(403).json({ error: 'Verification failed. Please try again.' });
     return;
   }
 
